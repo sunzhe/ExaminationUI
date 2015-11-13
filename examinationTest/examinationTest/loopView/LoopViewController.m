@@ -1,0 +1,70 @@
+//
+//  LoopViewController.m
+//  examinationTest
+//
+//  Created by ioszhe on 15/11/12.
+//  Copyright © 2015年 ioszhe. All rights reserved.
+//
+
+#import "LoopViewController.h"
+#import "ScrollLoopView.h"
+#import "ExaminationCell.h"
+@interface LoopViewController ()
+
+@property(nonatomic, retain)NSMutableArray *contentList;
+@end
+
+@implementation LoopViewController
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    NSMutableArray *tmp = [NSMutableArray array];
+    for (NSInteger i=1; i< 10; i++) {
+        ExamModel *exam = [ExamModel new];
+        exam.title = [NSString stringWithFormat:@"考试题目 %ld考试题目考试题目考试题目考试题目考试题目考试题目考试题目\n123\n123\n123\n123\n123\n123\n123", (long)i];
+        exam.answers =  @[@"答案1\n123", @"答案2\n123\n123", @"答案3\n123\n123\n123\n123", @"答案4\n123\n123"];
+        exam.theAnswer = 1 + rand()%4;
+        [tmp addObject:exam];
+    }
+    self.contentList = tmp;
+    
+    ScrollLoopView *loopView = [[ScrollLoopView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 400)];
+    loopView.rowNum = _contentList.count;
+
+    __unsafe_unretained ScrollLoopView * tmpLoopView = loopView;
+    loopView.itemForRow = ^UIView *(UIView *item, NSInteger row) {
+        ExaminationCell *tmp = (ExaminationCell *)item;
+        if (tmp == nil) {
+            tmp = [[ExaminationCell alloc] initWithFrame:loopView.bounds];
+            tmp.onSelectAnswer= ^(NSInteger idx){
+                if (idx == self.contentList.count-1) {
+                    //最后一个
+                    [self handelAllAnswer];
+                }else {
+                    [tmpLoopView performSelector:@selector(scrollToNext) withObject:nil afterDelay:0.5];
+                }
+            };
+        }
+        tmp.exam = row < self.contentList.count ? self.contentList[row] : nil;
+        return tmp;
+    };
+    loopView.canScrollToIdx = ^BOOL (NSInteger row){
+        if (row > 0 && row < self.contentList.count) {
+            ExamModel *exam = self.contentList[row-1];
+            return exam.selectAnswer > 0;
+        }
+        return YES;
+    };
+    loopView.currSelectRow = ^(UIView *item, NSInteger idx){
+        NSLog(@"滚动到%ld", idx);
+    };
+    [self.view addSubview:loopView];
+}
+
+- (void)handelAllAnswer{
+    NSInteger score = 0;
+    for (ExamModel *exam in _contentList) {
+        score += exam.selectAnswer;
+    }
+    NSLog(@"得分为%ld", score);
+}
+@end
