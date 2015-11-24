@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSMutableArray *tmp = [NSMutableArray array];
-    for (NSInteger i=1; i< 10; i++) {
+    for (NSInteger i=1; i< 5; i++) {
         ExamModel *exam = [ExamModel new];
         exam.title = [NSString stringWithFormat:@"考试题目 %ld考试题目考试题目考试题目考试题目考试题目考试题目考试题目\n123\n123\n123\n123\n123\n123\n123", (long)i];
         exam.answers =  @[@"答案1\n123", @"答案2\n123\n123", @"答案3\n123\n123\n123\n123", @"答案4\n123\n123"];
@@ -26,7 +26,7 @@
         [tmp addObject:exam];
     }
     self.contentList = tmp;
-    
+    [tmp addObject:@(1)];
     ScrollLoopView *loopView = [[ScrollLoopView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 400)];
     loopView.rowNum = _contentList.count;
 
@@ -59,12 +59,23 @@
     };
     [self.view addSubview:loopView];
 }
-
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    url = [NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID"];
+    if([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
 - (void)handelAllAnswer{
     NSInteger score = 0;
     for (ExamModel *exam in _contentList) {
         score += exam.selectAnswer;
     }
     NSLog(@"得分为%ld", score);
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //[_contentList addObject:nil];
 }
 @end

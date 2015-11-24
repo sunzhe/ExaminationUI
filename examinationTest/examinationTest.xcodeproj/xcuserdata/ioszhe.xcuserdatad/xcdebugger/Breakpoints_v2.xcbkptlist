@@ -9,14 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "examinationTest/KIPageScrollView/KIPageScrollView.m"
-            timestampString = "469007218.690463"
+            filePath = "examinationTest/common/utilities/MyUncaughtExceptionHandler/UncaughtExceptionHandler.mm"
+            timestampString = "469967611.358767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
-            landmarkName = "-showPageIndex_More:animated:"
-            landmarkType = "5">
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "UncaughtExceptionHandlers (NSException *exception)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

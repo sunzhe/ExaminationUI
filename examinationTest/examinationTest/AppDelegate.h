@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UncaughtExceptionHandler.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

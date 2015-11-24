@@ -17,6 +17,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //_window.rootViewController = [ExamViewController new];
     // Override point for customization after application launch.
+    [UncaughtExceptionHandler InstallUncaughtExceptionHandler];
     return YES;
 }
 
